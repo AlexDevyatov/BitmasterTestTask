@@ -1,11 +1,7 @@
 package com.example.myapplication.repository;
 
+import com.example.myapplication.model.ImagesResponse;
 import com.example.myapplication.service.ApiService;
-import com.example.myapplication.model.Image;
-
-import java.util.List;
-
-import javax.inject.Inject;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -22,7 +18,7 @@ public class ImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
-    public Single<List<Image>> loadImages(String keyWord, int perPage) {
+    public Single<ImagesResponse> loadImages(String keyWord, int perPage) {
         return service.getImages(KEY, perPage, keyWord)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

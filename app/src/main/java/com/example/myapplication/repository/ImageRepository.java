@@ -4,7 +4,7 @@ import com.example.myapplication.model.Image;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.Single;
 
 public interface ImageRepository {
 

@@ -7,7 +7,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class ImageRepositoryImpl implements ImageRepository {
 
@@ -21,7 +23,9 @@ public class ImageRepositoryImpl implements ImageRepository {
 
     @Override
     public Single<List<Image>> loadImages(String keyWord, int perPage) {
-        return service.getImages(KEY, perPage, keyWord);
+        return service.getImages(KEY, perPage, keyWord)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
 }

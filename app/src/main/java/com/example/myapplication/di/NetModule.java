@@ -1,12 +1,13 @@
-package com.example.myapplication;
+package com.example.myapplication.di;
 
-import android.app.Application;
+import com.example.myapplication.repository.ImageRepository;
+import com.example.myapplication.repository.ImageRepositoryImpl;
+import com.example.myapplication.service.ApiService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
-import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -23,15 +24,6 @@ public class NetModule {
 
     @Provides
     @Singleton
-    Cache provideOkHttpCache(Application application) {
-        int cacheSize = 10 * 1024 * 1024; // 10 MiB
-        Cache cache = new Cache(application.getCacheDir(), cacheSize);
-        return cache;
-    }
-
-
-    @Provides
-    @Singleton
     Gson provideGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         return gsonBuilder.create();
@@ -39,9 +31,8 @@ public class NetModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(Cache cache) {
+    OkHttpClient provideOkHttpClient() {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
-        client.cache(cache);
         return client.build();
     }
 
@@ -54,5 +45,17 @@ public class NetModule {
                 .client(okHttpClient)
                 .build();
         return retrofit;
+    }
+
+    @Provides
+    @Singleton
+    ApiService provideApiService(Retrofit retrofit) {
+        return retrofit.create(ApiService.class);
+    }
+
+    @Provides
+    @Singleton
+    ImageRepository provideImageRepository(ApiService service) {
+        return new ImageRepositoryImpl(service);
     }
 }

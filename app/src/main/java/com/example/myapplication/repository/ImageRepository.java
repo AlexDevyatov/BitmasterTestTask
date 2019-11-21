@@ -8,5 +8,5 @@ import io.reactivex.rxjava3.core.Single;
 
 public interface ImageRepository {
 
-    public Single<List<Image>> loadImages();
+    public Single<List<Image>> loadImages(String keyword, int perPage);
 }

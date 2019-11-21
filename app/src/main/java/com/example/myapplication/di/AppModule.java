@@ -1,4 +1,6 @@
-package com.example.myapplication;
+package com.example.myapplication.di;
+
+import com.example.myapplication.App;
 
 import javax.inject.Singleton;
 

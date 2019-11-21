@@ -1,10 +1,9 @@
-package com.example.myapplication.grid;
+package com.example.myapplication.view;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.ImagesAdapter;
 import com.example.myapplication.model.Image;
+import com.example.myapplication.viewmodel.ImageViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +41,13 @@ public class GridFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         List<Image> images = new ArrayList<>();
         mAdapter = new ImagesAdapter(images);
+
+        ImageViewModel imageViewModel = ViewModelProviders.of(this).get(ImageViewModel.class);
+        imageViewModel.getData().observe(this, this::updateImages);
         return view;
     }
 
-    public void updateImages(List<Image> images) {
+    private void updateImages(List<Image> images) {
         mAdapter.updateImages(images);
     }
 }

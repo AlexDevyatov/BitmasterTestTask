@@ -7,11 +7,11 @@ public class ImagesResponse {
     @SerializedName("photos")
     private Images images;
 
-    public Images getImages() {
+    public Images getResponse() {
         return images;
     }
 
-    public void setImages(Images images) {
+    public void setResponse(Images images) {
         this.images = images;
     }
 }

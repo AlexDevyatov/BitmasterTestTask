@@ -27,6 +27,11 @@ public class GridFragment extends Fragment {
     private ImagesAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    public static GridFragment newInstance() {
+        GridFragment fragment = new GridFragment();
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +50,12 @@ public class GridFragment extends Fragment {
         ImageViewModel imageViewModel = ViewModelProviders.of(this).get(ImageViewModel.class);
         imageViewModel.getData().observe(this, this::updateImages);
         return view;
+    }
+
+    public void loadImages(String keyWord) {
+        ImageViewModel imageViewModel = ViewModelProviders.of(this).get(ImageViewModel.class);
+        imageViewModel.setKeyword(keyWord);
+        imageViewModel.loadImages();
     }
 
     private void updateImages(List<Image> images) {

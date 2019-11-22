@@ -18,11 +18,22 @@ public class ImageViewModel extends BaseViewModel<List<Image>> {
     ImageRepository repository;
 
     private String keyword;
-    private int perPage;
+    private final int perPage = 10;
 
-    public ImageViewModel(String keyword, int perPage) {
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
         this.keyword = keyword;
-        this.perPage = perPage;
+    }
+
+    public int getPerPage() {
+        return perPage;
+    }
+
+    public void loadImages() {
+        loadData();
     }
 
     @Override

@@ -53,7 +53,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesView
         }
 
         public void bind(Image image) {
-            tvId.setText(image.getId());
+            tvId.setText(String.valueOf(image.getId()));
         }
     }
 

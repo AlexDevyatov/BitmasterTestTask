@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class Image {
 
     @SerializedName("id")
-    private Integer id;
+    private Long id;
 
     @SerializedName("owner")
     private String owner;
@@ -28,11 +28,11 @@ public class Image {
     @SerializedName("isfamily")
     private Integer isFamily;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

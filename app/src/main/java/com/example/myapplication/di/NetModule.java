@@ -1,15 +1,17 @@
 package com.example.myapplication.di;
 
-import com.example.myapplication.repository.ImageRepository;
 import com.example.myapplication.repository.ImageRepositoryImpl;
 import com.example.myapplication.service.ApiService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
@@ -41,6 +43,7 @@ public class NetModule {
     Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(baseUrl)
                 .client(okHttpClient)
                 .build();

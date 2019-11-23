@@ -1,9 +1,9 @@
 package com.example.myapplication.viewmodel;
 
-import android.annotation.SuppressLint;
 
+import com.example.myapplication.di.AppComponent;
 import com.example.myapplication.model.Image;
-import com.example.myapplication.repository.ImageRepository;
+import com.example.myapplication.repository.ImageRepositoryImpl;
 
 import java.util.List;
 
@@ -15,10 +15,17 @@ import io.reactivex.schedulers.Schedulers;
 public class ImageViewModel extends BaseViewModel<List<Image>> {
 
     @Inject
-    ImageRepository repository;
+    ImageRepositoryImpl repository;
+
+    private final AppComponent appComponent;
 
     private String keyword;
     private final int perPage = 10;
+
+    public ImageViewModel(AppComponent appComponent) {
+        this.appComponent = appComponent;
+        appComponent.inject(this);
+    }
 
     public String getKeyword() {
         return keyword;

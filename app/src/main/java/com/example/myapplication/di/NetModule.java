@@ -55,7 +55,7 @@ public class NetModule {
 
     @Provides
     @Singleton
-    ImageRepository provideImageRepository(ApiService service) {
+    ImageRepositoryImpl provideImageRepository(ApiService service) {
         return new ImageRepositoryImpl(service);
     }
 }

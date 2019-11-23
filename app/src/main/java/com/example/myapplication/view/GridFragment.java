@@ -11,10 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.myapplication.App;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.ImagesAdapter;
+import com.example.myapplication.di.AppComponent;
 import com.example.myapplication.model.Image;
 import com.example.myapplication.viewmodel.ImageViewModel;
+import com.example.myapplication.viewmodel.factory.ImageViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,16 +49,19 @@ public class GridFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         List<Image> images = new ArrayList<>();
         mAdapter = new ImagesAdapter(images);
+        recyclerView.setAdapter(mAdapter);
 
-        ImageViewModel imageViewModel = ViewModelProviders.of(this).get(ImageViewModel.class);
+        AppComponent appComponent = ((App)getActivity().getApplication()).getAppComponent();
+        ImageViewModel imageViewModel = ViewModelProviders.of(this, new ImageViewModelFactory(appComponent)).get(ImageViewModel.class);
+        imageViewModel.loadImages();
         imageViewModel.getData().observe(this, this::updateImages);
         return view;
     }
 
     public void loadImages(String keyWord) {
-        ImageViewModel imageViewModel = ViewModelProviders.of(this).get(ImageViewModel.class);
+        /*ImageViewModel imageViewModel = ViewModelProviders.of(this).get(ImageViewModel.class);
         imageViewModel.setKeyword(keyWord);
-        imageViewModel.loadImages();
+        imageViewModel.loadImages();*/
     }
 
     private void updateImages(List<Image> images) {

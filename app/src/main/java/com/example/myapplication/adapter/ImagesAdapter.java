@@ -3,11 +3,13 @@ package com.example.myapplication.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.model.Image;
 
@@ -45,15 +47,15 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesView
     }
 
     public static class ImagesViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvId;
+        private ImageView imageView;
 
         public ImagesViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvId = itemView.findViewById(R.id.imageId);
+            imageView = itemView.findViewById(R.id.imageView);
         }
 
         public void bind(Image image) {
-            tvId.setText(String.valueOf(image.getId()));
+            Glide.with(imageView.getContext()).load(image.getUrl()).into(imageView);
         }
     }
 

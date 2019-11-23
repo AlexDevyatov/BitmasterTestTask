@@ -58,12 +58,6 @@ public class GridFragment extends Fragment {
         return view;
     }
 
-    public void loadImages(String keyWord) {
-        /*ImageViewModel imageViewModel = ViewModelProviders.of(this).get(ImageViewModel.class);
-        imageViewModel.setKeyword(keyWord);
-        imageViewModel.loadImages();*/
-    }
-
     private void updateImages(List<Image> images) {
         mAdapter.updateImages(images);
     }

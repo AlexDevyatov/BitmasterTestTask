@@ -16,6 +16,9 @@ public class Image {
     @SerializedName("server")
     private Integer server;
 
+    @SerializedName("farm")
+    private String farm;
+
     @SerializedName("title")
     private String title;
 
@@ -27,6 +30,8 @@ public class Image {
 
     @SerializedName("isfamily")
     private Integer isFamily;
+
+    private String url;
 
     public Long getId() {
         return id;
@@ -90,5 +95,23 @@ public class Image {
 
     public void setIsFamily(Integer isFamily) {
         this.isFamily = isFamily;
+    }
+
+    public String getFarm() {
+        return farm;
+    }
+
+    public void setFarm(String farm) {
+        this.farm = farm;
+    }
+
+    public String getUrl() {
+        setUrl("http://farm" + farm + ".static.flickr.com/"
+                + server + "/" + id + "_" + secret + ".jpg");
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

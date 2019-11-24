@@ -22,7 +22,7 @@ public class ImageViewModel extends BaseViewModel<List<Image>> {
     ImageRepositoryImpl repository;
 
     private String keyword;
-    private final int perPage = 10;
+    private final int perPage = 20;
 
     public ImageViewModel(AppComponent appComponent) {
         appComponent.inject(this);

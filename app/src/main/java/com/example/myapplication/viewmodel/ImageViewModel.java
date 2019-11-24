@@ -21,7 +21,9 @@ public class ImageViewModel extends BaseViewModel<List<Image>> {
     @Inject
     ImageRepositoryImpl repository;
 
-    private String keyword;
+    private static int page = 1;
+
+    private String keyword = "";
     private final int perPage = 20;
 
     public ImageViewModel(AppComponent appComponent) {
@@ -36,6 +38,18 @@ public class ImageViewModel extends BaseViewModel<List<Image>> {
         this.keyword = keyword;
     }
 
+    public static int getPage() {
+        return page;
+    }
+
+    public static void setPage(int newPage) {
+        page = newPage;
+    }
+
+    public static void incPage() {
+        page++;
+    }
+
     public int getPerPage() {
         return perPage;
     }
@@ -47,7 +61,7 @@ public class ImageViewModel extends BaseViewModel<List<Image>> {
     @Override
     protected void loadData() {
         repository
-                .loadImages(keyword, perPage)
+                .loadImages(keyword, perPage, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<ImagesResponse>() {

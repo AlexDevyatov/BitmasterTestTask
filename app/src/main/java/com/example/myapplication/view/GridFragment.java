@@ -29,6 +29,7 @@ public class GridFragment extends Fragment {
     private RecyclerView recyclerView;
     private ImagesAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private ImageViewModel imageViewModel;
 
     public static GridFragment newInstance() {
         GridFragment fragment = new GridFragment();
@@ -50,12 +51,27 @@ public class GridFragment extends Fragment {
         List<Image> images = new ArrayList<>();
         mAdapter = new ImagesAdapter(images);
         recyclerView.setAdapter(mAdapter);
+        createViewModel();
+        return view;
+    }
 
-        AppComponent appComponent = ((App)getActivity().getApplication()).getAppComponent();
-        ImageViewModel imageViewModel = ViewModelProviders.of(this, new ImageViewModelFactory(appComponent)).get(ImageViewModel.class);
+    private void createViewModel() {
+        AppComponent appComponent = ((App) getActivity().getApplication()).getAppComponent();
+        if (imageViewModel == null) {
+            imageViewModel = ViewModelProviders.of(this, new ImageViewModelFactory(appComponent)).get(ImageViewModel.class);
+        }
+        ImageViewModel.incPage();
+        String keyword = ((MainActivity)getActivity()).getTypedText();
+        imageViewModel.setKeyword(keyword);
         imageViewModel.loadImages();
         imageViewModel.getData().observe(this, this::updateImages);
-        return view;
+    }
+
+    public void loadImages(String keyword) {
+        ImageViewModel.setPage(1);
+        imageViewModel.setKeyword(keyword);
+        imageViewModel.loadImages();
+        imageViewModel.getData().observe(this, this::updateImages);
     }
 
     private void updateImages(List<Image> images) {

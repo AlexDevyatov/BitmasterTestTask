@@ -18,8 +18,8 @@ public class ImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
-    public Single<ImagesResponse> loadImages(String keyWord, int perPage) {
-        return service.getImages(KEY, perPage, keyWord)
+    public Single<ImagesResponse> loadImages(String keyWord, int perPage, int page) {
+        return service.getImages(KEY, perPage, page, keyWord)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

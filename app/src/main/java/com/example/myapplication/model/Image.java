@@ -1,8 +1,11 @@
 package com.example.myapplication.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Image {
+public class Image implements Parcelable {
 
     @SerializedName("id")
     private Long id;
@@ -32,6 +35,51 @@ public class Image {
     private Integer isFamily;
 
     private String url;
+
+    protected Image(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        owner = in.readString();
+        secret = in.readString();
+        if (in.readByte() == 0) {
+            server = null;
+        } else {
+            server = in.readInt();
+        }
+        farm = in.readString();
+        title = in.readString();
+        if (in.readByte() == 0) {
+            isPublic = null;
+        } else {
+            isPublic = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            isFriend = null;
+        } else {
+            isFriend = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            isFamily = null;
+        } else {
+            isFamily = in.readInt();
+        }
+        url = in.readString();
+    }
+
+    public static final Creator<Image> CREATOR = new Creator<Image>() {
+        @Override
+        public Image createFromParcel(Parcel in) {
+            return new Image(in);
+        }
+
+        @Override
+        public Image[] newArray(int size) {
+            return new Image[size];
+        }
+    };
 
     public Long getId() {
         return id;
@@ -113,5 +161,49 @@ public class Image {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(id);
+        }
+        parcel.writeString(owner);
+        parcel.writeString(secret);
+        if (server == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(server);
+        }
+        parcel.writeString(farm);
+        parcel.writeString(title);
+        if (isPublic == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(isPublic);
+        }
+        if (isFriend == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(isFriend);
+        }
+        if (isFamily == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(isFamily);
+        }
+        parcel.writeString(url);
     }
 }

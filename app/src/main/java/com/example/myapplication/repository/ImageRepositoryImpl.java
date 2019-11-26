@@ -1,6 +1,7 @@
 package com.example.myapplication.repository;
 
 import com.example.myapplication.model.ImagesResponse;
+import com.example.myapplication.model.LocationResponse;
 import com.example.myapplication.service.ApiService;
 
 import io.reactivex.Single;
@@ -22,6 +23,11 @@ public class ImageRepositoryImpl implements ImageRepository {
         return service.getImages(KEY, perPage, page, keyWord)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Single<LocationResponse> getImageLocation(long photoId) {
+        return service.getImageLocation(KEY, photoId);
     }
 
 }

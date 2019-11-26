@@ -5,12 +5,19 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MyPagerAdapter;
+import com.example.myapplication.model.Image;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,5 +48,30 @@ public class MainActivity extends AppCompatActivity {
         if (page != null) {
             ((GridFragment)page).loadImages(text);
         }
+    }
+
+    private ArrayList<Image> getImages() {
+        Fragment page = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + viewPager.getCurrentItem());
+        if (page != null) {
+            return (ArrayList)((GridFragment)page).getAdapter().getImages();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_open_map) {
+            ArrayList<Image> images = getImages();
+            Intent intent = new Intent(this, MapActivity.class);
+            intent.putParcelableArrayListExtra("images", images);
+            startActivity(intent);
+        }
+        return true;
     }
 }

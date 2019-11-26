@@ -54,7 +54,7 @@ public class ImageViewModel extends BaseViewModel<List<Image>> {
         return perPage;
     }
 
-    public void loadImages() {
+    public void request() {
         loadData();
     }
 
@@ -78,7 +78,7 @@ public class ImageViewModel extends BaseViewModel<List<Image>> {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("request", "error");
+                        Log.d("GetImagesRequest", "error");
                         e.printStackTrace();
                     }
                 });

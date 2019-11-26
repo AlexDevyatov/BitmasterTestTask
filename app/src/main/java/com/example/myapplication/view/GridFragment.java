@@ -63,18 +63,22 @@ public class GridFragment extends Fragment {
         ImageViewModel.incPage();
         String keyword = ((MainActivity)getActivity()).getTypedText();
         imageViewModel.setKeyword(keyword);
-        imageViewModel.loadImages();
+        imageViewModel.request();
         imageViewModel.getData().observe(this, this::updateImages);
     }
 
     public void loadImages(String keyword) {
         ImageViewModel.setPage(1);
         imageViewModel.setKeyword(keyword);
-        imageViewModel.loadImages();
+        imageViewModel.request();
         imageViewModel.getData().observe(this, this::updateImages);
     }
 
     private void updateImages(List<Image> images) {
         mAdapter.updateImages(images);
+    }
+
+    public ImagesAdapter getAdapter() {
+        return mAdapter;
     }
 }

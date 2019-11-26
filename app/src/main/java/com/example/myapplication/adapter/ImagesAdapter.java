@@ -48,6 +48,10 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesView
         notifyDataSetChanged();
     }
 
+    public List<Image> getImages() {
+        return images;
+    }
+
     public static class ImagesViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageView;
         private Image image;

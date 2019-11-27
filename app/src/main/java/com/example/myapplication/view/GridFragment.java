@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.myapplication.App;
 import com.example.myapplication.R;
@@ -26,6 +27,7 @@ public class GridFragment extends Fragment {
 
     private final int SPAN_COUNT = 4;
 
+    private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private ImagesAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -45,6 +47,7 @@ public class GridFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_grid, container, false);
+        progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.recyclerView);
         layoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT);
         recyclerView.setLayoutManager(layoutManager);
@@ -63,6 +66,7 @@ public class GridFragment extends Fragment {
         ImageViewModel.incPage();
         String keyword = ((MainActivity)getActivity()).getTypedText();
         imageViewModel.setKeyword(keyword);
+        progressBar.setVisibility(View.VISIBLE);
         imageViewModel.request();
         imageViewModel.getData().observe(this, this::updateImages);
     }
@@ -70,11 +74,13 @@ public class GridFragment extends Fragment {
     public void loadImages(String keyword) {
         ImageViewModel.setPage(1);
         imageViewModel.setKeyword(keyword);
+        progressBar.setVisibility(View.VISIBLE);
         imageViewModel.request();
         imageViewModel.getData().observe(this, this::updateImages);
     }
 
     private void updateImages(List<Image> images) {
+        progressBar.setVisibility(View.GONE);
         mAdapter.updateImages(images);
     }
 

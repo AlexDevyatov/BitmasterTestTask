@@ -49,7 +49,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         for (Image image : images) {
             locationViewModel.setPhotoId(image.getId());
             locationViewModel.get();
-            //break;
         }
     }
 }

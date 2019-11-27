@@ -13,8 +13,6 @@ import dagger.Component;
 @Component(modules = {AppModule.class, NetModule.class})
 public interface AppComponent {
 
-    void inject(ImageRepository repository);
-
     void inject(ImageViewModel imageViewModel);
 
     void inject(LocationViewModel locationViewModel);
